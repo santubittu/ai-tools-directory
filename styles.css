@@ -1,1 +1,60 @@
+// script.js
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize GSAP animations
+    gsap.registerPlugin(ScrollTrigger);
 
+    // Animate hero section
+    gsap.from(".hero-content", {
+        duration: 1.5,
+        y: 100,
+        opacity: 0,
+        ease: "power4.out"
+    });
+
+    // Scroll Trigger animations
+    gsap.utils.toArray("[data-scroll]").forEach(element => {
+        gsap.from(element, {
+            scrollTrigger: {
+                trigger: element,
+                start: "top 80%",
+                toggleActions: "play none none reverse"
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1
+        });
+    });
+
+    // Dynamic content loading
+    const tools = [
+        {name: "GPT-4", category: "Writing", link: "#", description: "Advanced AI writing assistant"},
+        {name: "DALL-E 3", category: "Design", link: "#", description: "AI image generation"},
+        // Add more tools here
+    ];
+
+    const gridContainer = document.querySelector('.grid-container');
+    tools.forEach(tool => {
+        const card = document.createElement('div');
+        card.className = 'tool-card';
+        card.innerHTML = `
+            <h3>${tool.name}</h3>
+            <p>${tool.description}</p>
+            <a href="${tool.link}" class="glow-link">Visit Tool</a>
+        `;
+        gridContainer.appendChild(card);
+    });
+
+    // Particle animation
+    createParticles();
+});
+
+function createParticles() {
+    const particles = document.querySelector('.particles');
+    for (let i = 0; i < 100; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particles.appendChild(particle);
+    }
+}
